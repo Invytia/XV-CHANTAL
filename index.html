@@ -16,7 +16,7 @@
             /* Paleta de Sedas y Dorados */
             --bg-satin-1: #fdf5f7;
             --bg-satin-2: #f2d7dd;
-            --mauve-dark: #a95c71; /* Acento sólido premium */
+            --mauve-dark: #a95c71;
             --mauve-light: #d698a7;
             --text-dark: #3a2e2d;
             --text-light: #6a5a5a;
@@ -24,10 +24,10 @@
             --gold: #d4af37;
             --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
             
-            /* Tipografías */
-            --font-serif: 'Playfair Display', serif;
-            --font-sans: 'Montserrat', sans-serif;
-            --font-cursive: 'Alex Brush', cursive;
+            /* Tipografías Integradas */
+            --font-serif: 'Playfair Display', serif; /* Para títulos y citas (Editorial) */
+            --font-sans: 'Montserrat', sans-serif; /* Para lectura clara, horas y ubicaciones */
+            --font-cursive: 'Alex Brush', cursive; /* Para acentos visuales y nombres (Fluida) */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -103,13 +103,13 @@
         }
         .content-layer { position: relative; z-index: 2; }
 
-        /* Elemento divisor sutil (Línea elegante) */
+        /* Elemento divisor sutil */
         .elegant-divider {
-            width: 60%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            margin: 40px auto; opacity: 0.6;
+            width: 50%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 40px auto; opacity: 0.5;
         }
 
-        /* ================= HERO ================= */
+        /* ================= HERO (INTOCABLE) ================= */
         .hero { text-align: center; padding: 60px 20px 20px; position: relative; }
         .xv-bg {
             position: absolute; top: 10px; left: 0; width: 100%;
@@ -132,35 +132,50 @@
         .pol-2 { transform: rotate(8deg); right: -10px; top: 40px; z-index: 2; }
         .polaroid img { width: 200px; height: 250px; object-fit: cover; border: 1px solid #f0f0f0; }
 
-        /* ================= SECCIONES INTEGRADAS (Flujo Continuo) ================= */
+        /* ================= SECCIONES INTEGRADAS ================= */
         .fluid-section { padding: 40px 30px; text-align: center; }
         
-        .msg-text { font-style: italic; font-size: 1.15rem; color: var(--text-light); margin-bottom: 40px; padding: 0 10px; }
-        .names-title { font-family: var(--font-sans); font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; color: var(--mauve-light); margin-bottom: 10px; font-weight: 600; }
-        .cursive-name { font-family: var(--font-cursive); font-size: 3.5rem; color: var(--mauve-dark); line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.05); }
+        /* Ajustes tipográficos para mayor cohesión */
+        .msg-text { font-family: var(--font-serif); font-style: italic; font-size: 1.25rem; color: var(--text-dark); margin-bottom: 40px; padding: 0 10px; line-height: 1.8; }
+        .names-title { font-family: var(--font-sans); font-size: 0.85rem; letter-spacing: 4px; text-transform: uppercase; color: var(--mauve-light); margin-bottom: 10px; font-weight: 600; }
+        .cursive-name { font-family: var(--font-cursive); font-size: 3.8rem; color: var(--mauve-dark); line-height: 1; text-shadow: 1px 1px 2px rgba(0,0,0,0.05); margin-bottom: 15px; }
 
-        .section-title { font-size: 2.2rem; letter-spacing: 4px; text-transform: uppercase; color: var(--mauve-dark); margin-bottom: 25px; }
+        /* Títulos de sección uniformes y elegantes */
+        .section-title { font-family: var(--font-serif); font-size: 2.6rem; color: var(--text-dark); margin-bottom: 25px; line-height: 1.2; }
+        .section-subtitle { font-family: var(--font-sans); font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; color: var(--text-light); margin-bottom: 15px; }
 
-        /* Ubicaciones Fluidas (Sin cajas) */
-        .location-block { margin-bottom: 50px; }
-        .loc-img { width: 100%; height: 220px; object-fit: cover; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .loc-title { font-family: var(--font-serif); font-size: 2rem; color: var(--text-dark); margin-bottom: 5px; }
-        .loc-desc { font-family: var(--font-sans); color: var(--text-light); font-size: 1rem; margin-bottom: 20px; line-height: 1.8; }
-        
+        /* ================= CALENDARIO (Nuevo Widget Integrado) ================= */
+        .calendar-grid {
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px;
+            font-family: var(--font-sans); font-size: 0.95rem; max-width: 320px; margin: 0 auto 10px;
+        }
+        .day-name { color: var(--mauve-dark); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+        .day { padding: 8px 0; color: var(--text-light); display: flex; align-items: center; justify-content: center; }
+        .day.highlight {
+            background: var(--gold-gradient); color: #fff; border-radius: 50%;
+            font-weight: bold; transform: scale(1.15); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            width: 35px; height: 35px; margin: 0 auto;
+        }
+
+        /* Botón Save The Date y Generales */
         .btn-pill {
-            display: inline-block; padding: 12px 35px; background: var(--mauve-dark);
+            display: inline-block; padding: 14px 40px; background: var(--mauve-dark);
             color: #fff; font-family: var(--font-sans); font-size: 0.9rem; letter-spacing: 2px;
             text-transform: uppercase; text-decoration: none; border-radius: 30px;
-            box-shadow: 0 8px 20px rgba(169, 92, 113, 0.4); transition: transform 0.3s, opacity 0.3s;
+            box-shadow: 0 8px 25px rgba(169, 92, 113, 0.3); transition: transform 0.3s, opacity 0.3s;
+            margin-top: 25px;
         }
         .btn-pill:hover { transform: translateY(-3px); opacity: 0.9; }
 
-        /* ================= ITINERARIO (Animación Alternada Izq-Der) ================= */
+        /* ================= UBICACIONES ================= */
+        .location-block { margin-bottom: 60px; }
+        .loc-img { width: 100%; height: 240px; object-fit: cover; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .loc-title { font-family: var(--font-cursive); font-size: 3rem; color: var(--gold); margin-bottom: 5px; }
+        .loc-desc { font-family: var(--font-sans); color: var(--text-light); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.8; }
+        
+        /* ================= ITINERARIO ================= */
         .timeline { position: relative; margin: 40px 0; padding: 20px 0; overflow: hidden; }
-        .timeline::before {
-            content: ''; position: absolute; top: 0; bottom: 0; left: 50%;
-            width: 2px; background: linear-gradient(to bottom, transparent, var(--mauve-light), transparent); transform: translateX(-50%);
-        }
+        .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: linear-gradient(to bottom, transparent, var(--mauve-light), transparent); transform: translateX(-50%); }
 
         .tl-item { position: relative; width: 50%; margin-bottom: 40px; opacity: 0; display: flex; flex-direction: column; }
         .tl-item.left { left: 0; padding-right: 30px; align-items: flex-end; text-align: right; transform: translateX(-120px); }
@@ -168,26 +183,26 @@
         .tl-item.show { opacity: 1; transform: translateX(0); transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 
         .tl-item::after {
-            content: ''; position: absolute; top: 10px; width: 16px; height: 16px;
+            content: ''; position: absolute; top: 12px; width: 16px; height: 16px;
             background: #fff; border: 3px solid var(--gold); border-radius: 50%;
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
         }
         .tl-item.left::after { right: -9px; }
         .tl-item.right::after { left: -9px; }
 
-        .tl-time { font-family: var(--font-serif); font-size: 2rem; font-weight: bold; color: var(--text-dark); line-height: 1; }
-        .tl-desc { font-family: var(--font-cursive); font-size: 2.5rem; color: var(--mauve-dark); margin-top: -5px; }
+        .tl-time { font-family: var(--font-sans); font-size: 1.2rem; font-weight: 600; letter-spacing: 2px; color: var(--mauve-dark); line-height: 1; margin-bottom: 5px; }
+        .tl-desc { font-family: var(--font-serif); font-size: 2rem; color: var(--text-dark); margin-top: -5px; }
 
-        /* ================= GALERÍA HORIZONTAL ================= */
+        /* ================= GALERÍA ================= */
         .gallery-wrapper { display: flex; overflow-x: auto; gap: 20px; padding: 20px; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .gallery-wrapper::-webkit-scrollbar { display: none; }
-        .gal-item { flex: 0 0 85%; scroll-snap-align: center; border-radius: 20px; overflow: hidden; height: 400px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 4px solid #fff; }
+        .gal-item { flex: 0 0 85%; scroll-snap-align: center; border-radius: 20px; overflow: hidden; height: 420px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 4px solid #fff; }
         .gal-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* ================= CÓDIGO DE VESTIMENTA Y REGALOS (Fluidos) ================= */
+        /* ================= CÓDIGO DE VESTIMENTA Y REGALOS ================= */
         .info-icons-row { display: flex; justify-content: center; align-items: flex-end; gap: 25px; margin-bottom: 25px; }
-        .custom-svg { width: 75px; height: 75px; fill: none; stroke: var(--mauve-dark); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05)); }
-        .info-text { font-family: var(--font-serif); font-size: 1.15rem; color: var(--text-light); max-width: 90%; margin: 0 auto; line-height: 1.8; }
+        .custom-svg { width: 70px; height: 70px; fill: none; stroke: var(--gold); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05)); }
+        .info-text { font-family: var(--font-sans); font-size: 1rem; color: var(--text-light); max-width: 90%; margin: 0 auto; line-height: 1.8; }
 
         /* ================= ASISTENCIA ================= */
         .rsvp-input {
@@ -254,16 +269,16 @@
             </section>
 
             <section class="fluid-section">
-                <h2 style="font-family: var(--font-sans); font-size: 1.2rem; letter-spacing: 5px; color: var(--mauve-dark); margin-bottom: 20px;">LLEGÓ NUESTRO DÍA</h2>
+                <h2 class="section-subtitle">Llegó nuestro día</h2>
                 <p class="msg-text">
-                    Hay momentos en la vida que se atesoran en el corazón para siempre, hoy dejo atrás mi niñez y comienzo una etapa hacia nuevos sueños. Acompáñanos a celebrar este día tan especial.
+                    "Hay momentos en la vida que se atesoran en el corazón para siempre, hoy dejo atrás mi niñez y comienzo una etapa hacia nuevos sueños. Acompáñanos a celebrar este día tan especial."
                 </p>
                 
-                <h3 class="names-title">Con la bendición de Dios y mis Padres:</h3>
+                <p class="names-title">Con la bendición de Dios y mis Padres:</p>
                 <p class="cursive-name">César Iván Ramirez</p>
                 <p class="cursive-name" style="margin-bottom: 40px;">y Blanca Yazmin Barajas</p>
                 
-                <h3 class="names-title">Mis Padrinos:</h3>
+                <p class="names-title">Mis Padrinos:</p>
                 <p class="cursive-name">José Magdaleno Rocha</p>
                 <p class="cursive-name">y Nohelia Irasema Barajas</p>
             </section>
@@ -271,7 +286,25 @@
             <div class="elegant-divider"></div>
 
             <section class="fluid-section">
+                <h2 class="section-title shimmer-text" style="margin-bottom: 5px;">Agosto</h2>
+                <p style="font-family: var(--font-sans); letter-spacing: 4px; color: var(--text-light); margin-bottom: 30px;">2026</p>
                 
+                <div class="calendar-grid">
+                    <div class="day-name">D</div><div class="day-name">L</div><div class="day-name">M</div><div class="day-name">M</div><div class="day-name">J</div><div class="day-name">V</div><div class="day-name">S</div>
+                    <div></div><div></div><div></div><div></div><div></div><div></div>
+                    <div class="day">1</div><div class="day">2</div><div class="day">3</div><div class="day">4</div><div class="day">5</div><div class="day">6</div><div class="day">7</div>
+                    <div class="day">8</div><div class="day">9</div><div class="day">10</div><div class="day">11</div><div class="day">12</div><div class="day">13</div><div class="day">14</div>
+                    <div class="day">15</div><div class="day">16</div><div class="day">17</div><div class="day">18</div><div class="day">19</div><div class="day">20</div><div class="day">21</div>
+                    <div class="day highlight">22</div><div class="day">23</div><div class="day">24</div><div class="day">25</div><div class="day">26</div><div class="day">27</div><div class="day">28</div>
+                    <div class="day">29</div><div class="day">30</div><div class="day">31</div>
+                </div>
+
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mis+XV+Chantal&dates=20260822T230000Z/20260823T080000Z" target="_blank" class="btn-pill">Save the Date</a>
+            </section>
+
+            <div class="elegant-divider"></div>
+
+            <section class="fluid-section">
                 <div class="location-block">
                     <h2 class="section-title shimmer-text">Ceremonia</h2>
                     <img src="assets/ceremonia.jpg" class="loc-img" alt="Ceremonia">
@@ -283,8 +316,8 @@
                 <div class="location-block" style="margin-bottom: 0;">
                     <h2 class="section-title shimmer-text">Recepción</h2>
                     <img src="assets/recepcion.jpg" class="loc-img" alt="Recepción">
-                    <h3 class="loc-title">Centro Social Salinas Victoria</h3>
-                    <p class="loc-desc">Calle Francisco I. Madero 220<br>Centro de Salinas Victoria</p>
+                    <h3 class="loc-title">Centro Social</h3>
+                    <p class="loc-desc">Calle Francisco I. Madero 220<br>Centro de Salinas Victoria<br><strong>7:30 p.m.</strong></p>
                     <a href="https://maps.app.goo.gl/vp9gc3FrjbPDbGLF9?g_st=iw" target="_blank" class="btn-pill">Ver Ubicación</a>
                 </div>
             </section>
