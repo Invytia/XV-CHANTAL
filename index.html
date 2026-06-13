@@ -15,11 +15,13 @@
 
     <style>
         :root {
-            --pink-light: #ffe6ea;
+            --pink-light: #ffe4e1;
             --pink-medium: #ffb6c1;
+            --pink-dark: #ff9fb0;
             --gold: #d4af37;
-            --gold-light: #f3e5ab;
-            --text-dark: #4a4a4a;
+            --gold-light: #f9f0c2;
+            --gold-gradient: linear-gradient(135deg, #d4af37 0%, #fff2cd 50%, #d4af37 100%);
+            --text-dark: #5a4b4d;
             --white: #ffffff;
             --font-cursive: 'Great Vibes', cursive;
             --font-main: 'Montserrat', 'Ocean Sans', sans-serif;
@@ -35,15 +37,21 @@
         body {
             font-family: var(--font-secondary);
             color: var(--text-dark);
-            background: linear-gradient(135deg, var(--white) 0%, var(--pink-light) 50%, var(--white) 100%);
+            background-color: var(--pink-light);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(255, 182, 193, 0.4), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(255, 182, 193, 0.4), transparent 25%);
             overflow-x: hidden;
             line-height: 1.6;
         }
 
         h1, h2, h3, .cursive {
             font-family: var(--font-cursive);
-            color: var(--gold);
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-weight: normal;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
         }
 
         /* Sparkles Background */
@@ -55,174 +63,328 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
-            background-image: radial-gradient(var(--gold-light) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: twinkle 4s infinite linear;
-            opacity: 0.4;
+            background-image: radial-gradient(var(--gold) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: twinkle 5s infinite linear;
+            opacity: 0.2;
         }
 
         @keyframes twinkle {
-            0% { transform: translateY(0); }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-50px); opacity: 0.4; }
+            0% { transform: translateY(0); opacity: 0.1; }
+            50% { opacity: 0.3; }
+            100% { transform: translateY(-60px); opacity: 0.1; }
         }
 
-        /* Contenedor Principal */
+        /* ================= ANIMACIÓN DEL SOBRE ================= */
+        #envelope-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('assets/apertura.jpg') center/cover no-repeat;
+            background-color: var(--pink-light);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope-body {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffc0cb, #ffb6c1);
+            border-radius: 5px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .envelope-front {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            border-left: 160px solid #ffb6c1;
+            border-right: 160px solid #ffb6c1;
+            border-bottom: 110px solid #ffaeb9;
+            border-top: 110px solid transparent;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 120px;
+            background: #ffb6c1;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top;
+            transition: transform 0.8s ease-in-out, z-index 0.2s;
+            z-index: 4;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .wax-seal {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: var(--gold-gradient);
+            border-radius: 50%;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-cursive);
+            font-size: 2rem;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 0 10px rgba(0,0,0,0.2);
+            border: 2px solid #e8c970;
+        }
+
+        .open-envelope .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+        
+        .open-envelope .wax-seal {
+            display: none;
+        }
+
+        .click-text {
+            position: absolute;
+            bottom: -50px;
+            width: 100%;
+            text-align: center;
+            font-family: var(--font-main);
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        /* ================= BOTÓN DE MÚSICA ================= */
+        .music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gold-gradient);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            z-index: 1000;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.3s;
+        }
+        .music-btn:hover { transform: scale(1.1); }
+        .music-btn.playing { animation: spinPulse 3s infinite linear; }
+
+        @keyframes spinPulse {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        /* ================= CONTENEDOR Y BLOQUES ================= */
         .container {
             max-width: 500px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 40px rgba(255, 182, 193, 0.4);
             position: relative;
             z-index: 1;
             padding-bottom: 50px;
+            overflow: hidden;
         }
 
         /* Hero Section */
         .hero {
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px 30px;
             position: relative;
+            background: linear-gradient(180deg, var(--white) 0%, rgba(255,228,225,0.3) 100%);
+            border-bottom-left-radius: 50% 20px;
+            border-bottom-right-radius: 50% 20px;
         }
 
         .hero img {
-            width: 250px;
-            height: 350px;
+            width: 260px;
+            height: 360px;
             object-fit: cover;
-            border-radius: 15px auto;
-            border-top-left-radius: 150px;
-            border-top-right-radius: 150px;
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
-            border: 3px solid var(--gold-light);
+            border-radius: 130px 130px 15px 15px;
+            box-shadow: 0 15px 30px rgba(255, 182, 193, 0.5);
+            border: 4px solid #fff;
+            padding: 5px;
+            background: var(--gold-gradient);
         }
 
         .hero h1 {
-            font-size: 4.5rem;
-            margin-top: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
-            background: linear-gradient(45deg, var(--gold), #e8c970);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 5rem;
+            margin-top: 15px;
+            line-height: 1;
         }
 
-        /* Mensaje y Padres */
+        /* Secciones */
         .section {
             padding: 40px 30px;
             text-align: center;
         }
 
+        .section-pink {
+            background: linear-gradient(135deg, var(--pink-light) 0%, var(--white) 100%);
+            margin: 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(255, 182, 193, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
         .main-message {
             font-family: var(--font-main);
             font-style: italic;
-            font-size: 1rem;
-            color: #666;
+            font-size: 1.05rem;
+            color: var(--text-dark);
             margin-bottom: 30px;
+            line-height: 1.8;
+            padding: 0 15px;
         }
 
-        .parents-info h3 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
+        .parents-info h3 { font-size: 2.8rem; margin-bottom: 15px; }
         .parents-info p {
             font-family: var(--font-main);
             font-size: 0.95rem;
             margin-bottom: 5px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            color: #4a3b3d;
         }
 
         .divider {
-            height: 2px;
-            width: 50%;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            height: 3px;
+            width: 60%;
+            background: var(--gold-gradient);
             margin: 30px auto;
+            border-radius: 5px;
+            opacity: 0.7;
         }
 
         /* Calendario Widget */
         .calendar-widget {
             background: var(--white);
             border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            border: 1px solid var(--pink-light);
-            margin-bottom: 20px;
+            padding: 25px 20px;
+            box-shadow: 0 15px 30px rgba(255, 182, 193, 0.3);
+            border: 2px solid var(--pink-light);
+            margin-bottom: 25px;
         }
 
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-            margin-top: 15px;
+            gap: 8px;
+            margin-top: 20px;
             font-family: var(--font-main);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
 
         .day-name { color: var(--gold); font-weight: 600; }
-        .day { padding: 8px; text-align: center; border-radius: 50%; }
+        .day { padding: 10px 0; text-align: center; border-radius: 50%; color: var(--text-dark); }
         .day.empty { background: transparent; }
         .day.highlight {
-            background: var(--gold);
+            background: var(--gold-gradient);
             color: var(--white);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
             font-weight: bold;
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
 
         .btn {
             display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(45deg, var(--gold), #e8c970);
+            padding: 12px 35px;
+            background: var(--gold-gradient);
             color: var(--white);
             text-decoration: none;
             border-radius: 30px;
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-family: var(--font-cursive);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-            transition: transform 0.3s ease;
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
             border: none;
             cursor: pointer;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            -webkit-text-fill-color: var(--white);
         }
 
-        .btn:hover { transform: scale(1.05); }
+        .btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 25px rgba(212, 175, 55, 0.4); }
 
         /* Ubicaciones */
         .location-card {
             background: var(--white);
-            border-radius: 15px;
+            border-radius: 20px;
             overflow: hidden;
             margin-bottom: 30px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-            border: 1px solid var(--pink-light);
+            box-shadow: 0 10px 25px rgba(255, 182, 193, 0.25);
+            border: 2px solid var(--pink-light);
         }
 
         .location-card img {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
         }
 
-        .location-info {
-            padding: 20px;
-        }
-
-        .location-info h2 { font-size: 2.2rem; margin-bottom: 10px; }
-        .location-info p { font-family: var(--font-main); font-size: 0.9rem; margin-bottom: 15px; }
+        .location-info { padding: 25px 20px; }
+        .location-info h2 { font-size: 2.5rem; margin-bottom: 10px; }
+        .location-info p { font-family: var(--font-main); font-size: 0.95rem; margin-bottom: 20px; }
 
         .btn-map {
-            background: var(--pink-medium);
+            background: linear-gradient(135deg, var(--pink-dark), var(--pink-medium));
             color: var(--white);
             font-family: var(--font-main);
             font-size: 0.9rem;
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 12px 25px;
+            border-radius: 25px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(255, 159, 176, 0.4);
         }
 
         /* Itinerario */
@@ -231,108 +393,142 @@
             align-items: center;
             margin-bottom: 30px;
             opacity: 0;
-            padding: 15px;
-            background: rgba(255,255,255,0.8);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.3);
+            padding: 20px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(255, 182, 193, 0.2);
+            border-left: 5px solid var(--gold);
         }
 
-        .itinerary-item.from-left { transform: translateX(-50px); transition: all 0.8s ease-out; }
-        .itinerary-item.from-right { transform: translateX(50px); transition: all 0.8s ease-out; flex-direction: row-reverse; text-align: right; }
-        
+        .itinerary-item.from-left { transform: translateX(-50px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .itinerary-item.from-right { transform: translateX(50px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); flex-direction: row-reverse; text-align: right; border-left: none; border-right: 5px solid var(--gold); }
         .itinerary-item.show { opacity: 1; transform: translateX(0); }
 
         .itinerary-icon {
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             background: var(--pink-light);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: var(--gold);
-            border: 2px solid var(--gold-light);
+            border: 2px dashed var(--pink-dark);
             flex-shrink: 0;
         }
 
-        .itinerary-text {
-            padding: 0 20px;
-            flex-grow: 1;
-        }
-
-        .itinerary-text h4 { font-family: var(--font-cursive); font-size: 2rem; color: var(--gold); }
-        .itinerary-text p { font-family: var(--font-main); font-weight: 600; }
+        .itinerary-text { padding: 0 20px; flex-grow: 1; }
+        .itinerary-text h4 { font-family: var(--font-cursive); font-size: 2.2rem; margin-bottom: 5px; }
+        .itinerary-text p { font-family: var(--font-main); font-weight: 600; color: var(--pink-dark); font-size: 1.1rem; }
 
         /* Galería (Swiper) */
-        .swiper {
-            width: 100%;
-            padding-top: 20px;
-            padding-bottom: 40px;
-        }
+        .swiper { width: 100%; padding-top: 20px; padding-bottom: 50px; }
         .swiper-slide {
-            width: 250px;
-            height: 350px;
-            border-radius: 15px;
+            width: 260px;
+            height: 380px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 3px solid #fff;
         }
-        .swiper-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            cursor: pointer;
-        }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
 
-        /* Modal Galería (Pantalla completa) */
+        /* Modal Galería */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,228,225,0.95); z-index: 1000;
+            align-items: center; justify-content: center; flex-direction: column;
+            backdrop-filter: blur(5px);
         }
         .modal.active { display: flex; }
-        .modal img { max-width: 95%; max-height: 80vh; border-radius: 10px; }
+        .modal img { max-width: 90%; max-height: 80vh; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 5px solid #fff; }
         .close-modal {
-            position: absolute; top: 20px; right: 20px;
-            color: white; font-size: 2rem; cursor: pointer;
+            position: absolute; top: 30px; right: 30px;
+            color: var(--text-dark); font-size: 2.5rem; cursor: pointer;
+            background: #fff; width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        /* Detalles Finales (Código, Regalos, RSVP) */
+        /* Info Boxes (Código, Regalos) */
         .info-box {
-            background: rgba(255,255,255,0.6);
-            border: 1px dashed var(--gold);
-            padding: 30px;
-            border-radius: 20px;
+            background: var(--white);
+            border: 2px dashed var(--gold);
+            padding: 35px 25px;
+            border-radius: 25px;
             margin-bottom: 30px;
             text-align: center;
+            box-shadow: 0 10px 25px rgba(255, 182, 193, 0.2);
+            position: relative;
         }
 
-        .info-icon { font-size: 2.5rem; color: var(--gold); margin-bottom: 15px; }
+        .info-icon { font-size: 3rem; color: var(--gold); margin-bottom: 20px; display: flex; justify-content: center; gap: 15px;}
         
+        /* Formulario Asistencia */
+        .rsvp-form {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+            margin-top: 20px;
+        }
+
+        .input-group { margin-bottom: 20px; }
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--pink-light);
+            border-radius: 15px;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            text-align: center;
+        }
+        .input-group input:focus { border-color: var(--pink-dark); }
+
         .whatsapp-btn {
-            background: #25D366;
+            background: linear-gradient(135deg, #25D366, #128C7E);
             color: white;
             font-family: var(--font-main);
             font-size: 1.1rem;
             padding: 15px 30px;
             border-radius: 30px;
-            text-decoration: none;
+            border: none;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             font-weight: bold;
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
-            margin-top: 20px;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+            width: 100%;
+            transition: transform 0.3s;
         }
+        .whatsapp-btn:hover { transform: translateY(-2px); }
 
     </style>
 </head>
 <body>
+
+    <audio id="bg-music" loop>
+        <source src="assets/song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="envelope-screen">
+        <div class="envelope-wrapper" onclick="openEnvelope()">
+            <div class="envelope-body"></div>
+            <div class="envelope-front"></div>
+            <div class="envelope-flap">
+                <div class="wax-seal">C</div>
+            </div>
+            <div class="click-text">Toca para abrir</div>
+        </div>
+    </div>
+
+    <button class="music-btn" id="music-toggle" onclick="toggleMusic()">
+        <i class="fa-solid fa-music"></i>
+    </button>
 
     <div class="sparkles-container"></div>
 
@@ -340,30 +536,30 @@
         <header class="hero">
             <img src="assets/hero.jpg" alt="Chantal XV">
             <h1>Chantal</h1>
-            <p style="font-family: var(--font-main); letter-spacing: 4px; margin-top: 10px; color: var(--gold);">MIS QUINCE AÑOS</p>
+            <p style="font-family: var(--font-main); letter-spacing: 5px; margin-top: 10px; font-weight: 600; color: var(--pink-dark);">MIS QUINCE AÑOS</p>
         </header>
 
-        <section class="section parents-info">
+        <section class="section parents-info section-pink">
             <p class="main-message">
-                "Hay momentos en la vida que se atesoran en el corazón para siempre, hoy dejo atrás mi niñez y comienzo una etapa hacia nuevos sueños. Acompáñanos a celebrar este día tan especial.."
+                "Hay momentos en la vida que se atesoran en el corazón para siempre, hoy dejo atrás mi niñez y comienzo una etapa hacia nuevos sueños. Acompáñanos a celebrar este día tan especial."
             </p>
             
-            <h2 style="font-size: 2rem; margin-bottom: 20px;">Con la bendición de Dios y mis Padres:</h2>
+            <h2 style="font-size: 2.2rem; margin-bottom: 25px;">Con la bendición de Dios y mis Padres:</h2>
             <p>César Iván Ramirez</p>
             <p>y Blanca Yazmin Barajas</p>
             
             <div class="divider"></div>
             
-            <h2 style="font-size: 2rem; margin-bottom: 20px;">Mis Padrinos:</h2>
+            <h2 style="font-size: 2.2rem; margin-bottom: 25px;">Mis Padrinos:</h2>
             <p>José Magdaleno Rocha</p>
             <p>y Nohelia Irasema Barajas</p>
         </section>
 
         <section class="section">
-            <h2 style="font-size: 3rem; margin-bottom: 10px;">Agosto 2026</h2>
+            <h2 style="font-size: 3.5rem; margin-bottom: 15px;">Agosto 2026</h2>
             
             <div class="calendar-widget">
-                <div style="font-family: var(--font-main); font-weight: bold; font-size: 1.2rem; color: var(--gold); text-align: center; margin-bottom: 10px;">AGOSTO</div>
+                <div style="font-family: var(--font-main); font-weight: 600; font-size: 1.3rem; color: var(--pink-dark); text-align: center; margin-bottom: 15px; letter-spacing: 2px;">AGOSTO</div>
                 <div class="calendar-grid">
                     <div class="day-name">D</div><div class="day-name">L</div><div class="day-name">M</div><div class="day-name">M</div><div class="day-name">J</div><div class="day-name">V</div><div class="day-name">S</div>
                     <div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div>
@@ -378,14 +574,14 @@
             <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mis+XV+Chantal&dates=20260822T230000Z/20260823T080000Z&details=Acomp%C3%B1anos%20a%20celebrar%20este%20d%C3%ADa%20tan%20especial." target="_blank" class="btn">Save the Date</a>
         </section>
 
-        <section class="section">
-            <h2 style="font-size: 3rem; margin-bottom: 30px;">Ubicaciones</h2>
+        <section class="section section-pink">
+            <h2 style="font-size: 3.5rem; margin-bottom: 30px;">Ubicaciones</h2>
             
             <div class="location-card">
                 <img src="assets/ceremonia.jpg" alt="Ceremonia">
                 <div class="location-info">
                     <h2>Ceremonia</h2>
-                    <p><strong>6:00 p.m.</strong><br>5ta avenida 321 Col. Satélite del Norte, Salinas Victoria Nuevo León.</p>
+                    <p><strong>6:00 p.m.</strong><br>5ta avenida 321 Col. Satélite del Norte,<br>Salinas Victoria Nuevo León.</p>
                     <a href="https://maps.app.goo.gl/hDMHoEA1dyYNUyzs5?g_st=iw" target="_blank" class="btn-map"><i class="fa-solid fa-map-location-dot"></i> Ver Mapa</a>
                 </div>
             </div>
@@ -394,14 +590,14 @@
                 <img src="assets/recepcion.jpg" alt="Recepción">
                 <div class="location-info">
                     <h2>Recepción</h2>
-                    <p>Centro Social Salinas Victoria.<br>Calle Francisco I. Madero 220 Centro de Salinas Victoria.</p>
+                    <p>Centro Social Salinas Victoria.<br>Calle Francisco I. Madero 220,<br>Centro de Salinas Victoria.</p>
                     <a href="https://maps.app.goo.gl/vp9gc3FrjbPDbGLF9?g_st=iw" target="_blank" class="btn-map"><i class="fa-solid fa-map-location-dot"></i> Ver Mapa</a>
                 </div>
             </div>
         </section>
 
         <section class="section">
-            <h2 style="font-size: 3.5rem; margin-bottom: 40px;">Itinerario</h2>
+            <h2 style="font-size: 4rem; margin-bottom: 40px;">Itinerario</h2>
             
             <div class="itinerary-item from-left observer-el">
                 <div class="itinerary-icon"><i class="fa-solid fa-church"></i></div>
@@ -452,8 +648,8 @@
             </div>
         </section>
 
-        <section class="section">
-            <h2 style="font-size: 3.5rem; margin-bottom: 20px;">Galería</h2>
+        <section class="section section-pink">
+            <h2 style="font-size: 4rem; margin-bottom: 20px;">Galería</h2>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide"><img src="assets/galeria1.jpg" alt="Chantal" onclick="openModal(this.src)"></div>
@@ -468,36 +664,105 @@
 
         <section class="section">
             <div class="info-box">
-                <div class="info-icon"><i class="fa-solid fa-user-tie"></i> <i class="fa-solid fa-shoe-prints"></i></div>
-                <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Código de Vestimenta</h2>
-                <p style="font-family: var(--font-main); font-size: 0.95rem;">El color rosa se reserva para la princesa de la noche.</p>
+                <div class="info-icon">
+                    <i class="fa-solid fa-user-tie"></i> 
+                    <i class="fa-solid fa-person-dress"></i>
+                </div>
+                <h2 style="font-size: 2.8rem; margin-bottom: 15px;">Código de Vestimenta</h2>
+                <p style="font-family: var(--font-main); font-size: 1rem;">El color rosa se reserva para la princesa de la noche.</p>
             </div>
 
             <div class="info-box">
                 <div class="info-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
-                <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Mesa de Regalos</h2>
-                <p style="font-family: var(--font-main); font-size: 0.95rem;">Tu presencia es mi mejor regalo, pero si quieres obsequiarme algo sugerimos la dinámica de lluvia de sobres.</p>
+                <h2 style="font-size: 2.8rem; margin-bottom: 15px;">Mesa de Regalos</h2>
+                <p style="font-family: var(--font-main); font-size: 1rem;">Tu presencia es mi mejor regalo, pero si quieres obsequiarme algo sugerimos la dinámica de lluvia de sobres.</p>
             </div>
         </section>
 
         <section class="section" style="padding-bottom: 60px;">
-            <h2 style="font-size: 3rem; margin-bottom: 20px;">Asistencia</h2>
-            <p style="font-family: var(--font-main);">Por favor, confirma tu asistencia para reservar tu lugar en este día tan especial.</p>
+            <h2 style="font-size: 3.5rem; margin-bottom: 15px;">Asistencia</h2>
+            <p style="font-family: var(--font-main); color: var(--text-dark);">Por favor, confirma tu asistencia para reservar tu lugar en este día tan especial.</p>
             
-            <a href="https://wa.me/528119202246?text=Hola!%20Confirmo%20mi%20asistencia%20a%20los%20XV%20de%20Chantal%20%E2%9C%A8" target="_blank" class="whatsapp-btn">
-                <i class="fa-brands fa-whatsapp"></i> Confirmar por WhatsApp
-            </a>
+            <div class="rsvp-form">
+                <div class="input-group">
+                    <input type="text" id="guestName" placeholder="Escribe tu Nombre y Apellido" required>
+                </div>
+                <button onclick="sendRSVP()" class="whatsapp-btn">
+                    <i class="fa-brands fa-whatsapp"></i> Confirmar por WhatsApp
+                </button>
+            </div>
         </section>
     </div>
 
     <div class="modal" id="imageModal">
-        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <div class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></div>
         <img id="modalImg" src="">
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     
     <script>
+        // Lógica de Apertura del Sobre y Audio
+        const audio = document.getElementById("bg-music");
+        const musicBtn = document.getElementById("music-toggle");
+        let isPlaying = false;
+
+        function openEnvelope() {
+            const wrapper = document.querySelector('.envelope-wrapper');
+            const screen = document.getElementById('envelope-screen');
+            
+            // Animación de abrir la solapa
+            wrapper.classList.add('open-envelope');
+            
+            // Desvanecer la pantalla completa y reproducir música después de la animación
+            setTimeout(() => {
+                screen.style.opacity = '0';
+                screen.style.transform = 'translateY(-100vh)';
+                
+                // Intentar reproducir audio
+                audio.play().then(() => {
+                    isPlaying = true;
+                    musicBtn.classList.add('playing');
+                    musicBtn.innerHTML = '<i class="fa-solid fa-music"></i>';
+                }).catch(error => {
+                    console.log("Auto-play prevenido por el navegador", error);
+                });
+
+                setTimeout(() => {
+                    screen.style.display = 'none';
+                }, 1000);
+            }, 800); // 800ms es el tiempo que tarda la solapa en abrirse
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                musicBtn.classList.remove('playing');
+                musicBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+            } else {
+                audio.play();
+                musicBtn.classList.add('playing');
+                musicBtn.innerHTML = '<i class="fa-solid fa-music"></i>';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // WhatsApp RSVP Dinámico
+        function sendRSVP() {
+            const nameInput = document.getElementById('guestName').value.trim();
+            
+            if (nameInput === "") {
+                alert("Por favor, ingresa tu nombre antes de confirmar.");
+                return;
+            }
+            
+            const message = `Hola! Soy ${nameInput} y confirmo mi asistencia a los XV de Chantal ✨`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/528119202246?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+
         // Inicializar Carrusel Swiper
         var swiper = new Swiper(".mySwiper", {
             effect: "coverflow",
@@ -505,20 +770,24 @@
             centeredSlides: true,
             slidesPerView: "auto",
             coverflowEffect: {
-                rotate: 20,
+                rotate: 15,
                 stretch: 0,
-                depth: 200,
+                depth: 150,
                 modifier: 1,
                 slideShadows: true,
             },
             loop: true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            }
         });
 
         // Animación al hacer Scroll (Itinerario)
         const observerOptions = {
             root: null,
             rootMargin: '0px',
-            threshold: 0.2
+            threshold: 0.15
         };
 
         const observer = new IntersectionObserver((entries, observer) => {
@@ -541,12 +810,12 @@
         function openModal(src) {
             modal.classList.add("active");
             modalImg.src = src;
-            document.body.style.overflow = "hidden"; // Prevenir scroll de fondo
+            document.body.style.overflow = "hidden"; // Prevenir scroll
         }
 
         function closeModal() {
             modal.classList.remove("active");
-            document.body.style.overflow = "auto";
+            document.body.style.overflow = "auto"; // Restaurar scroll
         }
 
         // Cerrar modal al hacer clic afuera de la imagen
