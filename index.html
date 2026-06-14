@@ -180,7 +180,7 @@
         }
         .loc-desc { font-family: var(--font-sans); color: var(--wine-dark); font-size: 0.9rem; letter-spacing: 1px; margin-bottom: 25px; line-height: 2; opacity: 0.85; text-transform: uppercase; }
 
-        /* ================= ITINERARIO ================= */
+        /* ================= ITINERARIO (Ajustado para no cortarse) ================= */
         .timeline { position: relative; margin: 50px 0; padding: 20px 0; overflow: hidden; }
         .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--mauve-medium); transform: translateX(-50%); opacity: 0.5; }
 
@@ -197,8 +197,8 @@
         .tl-item.left::after { right: -7px; }
         .tl-item.right::after { left: -7px; }
 
-        .tl-time { font-family: var(--font-sans); font-size: 1.1rem; font-weight: 500; letter-spacing: 3px; color: var(--mauve-medium); line-height: 1; margin-bottom: 8px; }
-        .tl-desc { font-family: var(--font-serif); font-size: 2.2rem; color: var(--wine-dark); margin-top: -5px; font-style: italic; }
+        .tl-time { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; letter-spacing: 2px; color: var(--mauve-medium); line-height: 1; margin-bottom: 6px; }
+        .tl-desc { font-family: var(--font-serif); font-size: 1.4rem; color: var(--wine-dark); margin-top: -2px; font-style: italic; white-space: nowrap; }
 
         /* ================= GALERÍA ================= */
         .gallery-wrapper { display: flex; overflow-x: auto; gap: 25px; padding: 30px 20px 50px; scroll-snap-type: x mandatory; scrollbar-width: none; }
@@ -347,7 +347,7 @@
                     <div class="day">29</div><div class="day">30</div><div class="day">31</div>
                 </div>
 
-                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mis+XV+Chantal&dates=20260822T230000Z/20260823T080000Z" target="_blank" class="btn-silver">Agregar al Calendario</a>
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mis+XV+Chantal&dates=20260822T230000Z/20260823T080000Z" target="_blank" class="btn-silver">Save the Date</a>
             </section>
 
             <div class="elegant-divider"><i class="fa-solid fa-diamond"></i></div>
@@ -516,7 +516,7 @@
             document.getElementById("secs").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }, 1000);
 
-        // --- ANIMACIÓN AL HACER SCROLL (APLICA A TODO EL CUERPO) ---
+        // --- ANIMACIÓN AL HACER SCROLL ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) { 
@@ -525,7 +525,6 @@
             });
         }, { threshold: 0.15 });
         
-        // Seleccionamos todos los elementos con la clase scroll-anim
         document.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
 
         // --- WHATSAPP RSVP ---
