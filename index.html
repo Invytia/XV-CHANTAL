@@ -166,13 +166,37 @@
         }
         .elegant-divider i { color: var(--silver); font-size: 0.5rem; margin: 0 15px; }
 
-        /* ================= HERO ================= */
-        .hero { text-align: center; padding: 60px 20px 20px; position: relative; }
+        /* ================= HERO (FOTO DE FONDO) ================= */
+        .hero { 
+            text-align: center; 
+            padding: 80px 20px 60px; 
+            position: relative; 
+            z-index: 1; 
+        }
+        .hero::before {
+            content: '';
+            position: absolute; 
+            inset: 0;
+            background: url('assets/foto2.jpg') center/cover no-repeat;
+            opacity: 0.45; /* Ligero difuminado para que el texto resalte */
+            z-index: -2;
+        }
+        .hero::after {
+            content: '';
+            position: absolute; 
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.7) 100%);
+            z-index: -1;
+        }
+        
         .xv-bg {
             position: absolute; top: 0px; left: 0; width: 100%;
-            font-size: 17rem; font-family: var(--font-serif); color: rgba(255,255,255,0.8);
+            font-size: 17rem; font-family: var(--font-serif); color: rgba(255,255,255,0.9);
             line-height: 1; z-index: -1; letter-spacing: -10px;
         }
+        
+        .hero > * { position: relative; z-index: 2; }
+        
         .hero-title { font-family: var(--font-cursive); font-size: 6rem; color: var(--wine-dark); margin: 10px 0 0; line-height: 0.9; text-shadow: 1px 1px 2px rgba(255,255,255,0.8); }
         .hero-date { font-family: var(--font-sans); font-size: 1.1rem; letter-spacing: 5px; color: var(--mauve-medium); margin-bottom: 30px; font-weight: 600; }
         
@@ -180,12 +204,6 @@
         .cd-item { display: flex; flex-direction: column; align-items: center; }
         .cd-label { font-family: var(--font-sans); font-size: 0.65rem; letter-spacing: 2px; color: var(--mauve-medium); text-transform: uppercase; font-weight: 600; }
         .cd-colon { margin-top: 5px; color: var(--mauve-medium); }
-
-        .polaroid-container { position: relative; height: 350px; margin: 40px auto; width: 280px; }
-        .polaroid { position: absolute; background: #fff; padding: 10px 10px 40px 10px; box-shadow: 0 15px 35px rgba(110, 44, 62, 0.15); border-radius: 4px; }
-        .pol-1 { transform: rotate(-5deg); left: -10px; top: 0; z-index: 1; }
-        .pol-2 { transform: rotate(8deg); right: -10px; top: 40px; z-index: 2; }
-        .polaroid img { width: 200px; height: 250px; object-fit: cover; border: 1px solid #f0f0f0; }
 
         /* ================= SECCIONES EDITORIALES ================= */
         .fluid-section { padding: 50px 30px; text-align: center; }
@@ -196,7 +214,7 @@
 
         .section-title { font-family: var(--font-serif); font-size: 3rem; color: var(--wine-dark); margin-bottom: 25px; line-height: 1.2; font-style: italic; }
 
-        /* ================= CALENDARIO ================= */
+        /* ================= CALENDARIO & FOTO 1 ================= */
         .calendar-grid {
             display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px;
             font-family: var(--font-sans); font-size: 0.95rem; max-width: 300px; margin: 0 auto 10px; color: var(--wine-dark);
@@ -217,6 +235,13 @@
             box-shadow: 0 10px 25px rgba(166, 166, 166, 0.4); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); margin-top: 35px;
         }
         .btn-silver:hover { transform: translateY(-4px); box-shadow: 0 15px 30px rgba(166, 166, 166, 0.6); }
+
+        .single-photo {
+            width: 100%; height: 350px; object-fit: cover; 
+            border-radius: 15px; margin-top: 60px; 
+            box-shadow: 0 20px 40px rgba(110, 44, 62, 0.15); 
+            border: 5px solid rgba(255,255,255,0.7);
+        }
 
         /* ================= UBICACIONES ================= */
         .location-block { margin-bottom: 70px; }
@@ -370,11 +395,6 @@
                     <div class="cd-item"><span id="mins">00</span><span class="cd-label">Minutos</span></div><span class="cd-colon">:</span>
                     <div class="cd-item"><span id="secs">00</span><span class="cd-label">Segundos</span></div>
                 </div>
-
-                <div class="polaroid-container">
-                    <div class="polaroid pol-1"><img src="assets/foto2.jpg" alt="Chantal"></div>
-                    <div class="polaroid pol-2"><img src="assets/foto1.jpg" alt="Chantal"></div>
-                </div>
             </section>
 
             <section class="fluid-section scroll-anim anim-left">
@@ -410,6 +430,9 @@
                 <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mis+XV+Chantal&dates=20260822T230000Z/20260823T080000Z" target="_blank" class="btn-silver">
                     <i class="fa-regular fa-calendar-plus"></i> Agregar al Calendario
                 </a>
+
+                <!-- Foto 1 trasladada debajo del botón -->
+                <img src="assets/foto1.jpg" alt="Chantal" class="single-photo scroll-anim anim-left">
             </section>
 
             <div class="elegant-divider"><i class="fa-solid fa-diamond"></i></div>
