@@ -114,10 +114,26 @@
             transition: opacity 1.2s ease-out, visibility 1.2s ease-out;
         }
         .intro-hint {
+            position: relative; /* Asegura que se posicione sobre el fondo */
+            z-index: 10;
             color: var(--white); font-family: var(--font-sans); font-size: 0.95rem; letter-spacing: 5px;
             text-transform: uppercase; font-weight: 600; animation: pulse 2s infinite; cursor: pointer;
             padding: 20px 40px; border: 1px solid rgba(255,255,255,0.4); border-radius: 40px;
             background: rgba(0,0,0,0.2); backdrop-filter: blur(5px);
+        }
+
+        /* ================= LIGHTBOX (GALERÍA PANTALLA COMPLETA) ================= */
+        #lightbox {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000; display: none; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        #lightbox.show { opacity: 1; }
+        #lightbox img { max-width: 90%; max-height: 90%; object-fit: contain; border-radius: 5px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .lightbox-close {
+            position: absolute; top: 20px; right: 30px; color: white; font-size: 3rem; cursor: pointer;
+            font-family: var(--font-sans); font-weight: 300;
         }
 
         /* ================= CONTENEDOR PRINCIPAL ================= */
@@ -225,7 +241,8 @@
         .gallery-wrapper { display: flex; overflow-x: auto; gap: 25px; padding: 30px 20px 50px; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .gallery-wrapper::-webkit-scrollbar { display: none; }
         .gal-item { flex: 0 0 82%; scroll-snap-align: center; border-radius: 15px; overflow: hidden; height: 450px; box-shadow: 0 20px 45px rgba(110, 44, 62, 0.2); }
-        .gal-item img { width: 100%; height: 100%; object-fit: cover; }
+        .gal-item img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: transform 0.3s ease; }
+        .gal-item img:hover { transform: scale(1.02); }
 
         /* ================= VESTIMENTA Y REGALOS ================= */
         .info-icons-row { display: flex; justify-content: center; align-items: flex-end; gap: 30px; margin-bottom: 30px; }
@@ -303,6 +320,11 @@
 </head>
 <body class="no-scroll">
 
+    <div id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Pantalla Completa" onclick="event.stopPropagation()">
+    </div>
+
     <audio id="bg-audio" loop><source src="assets/song.mp3" type="audio/mpeg"></audio>
     <button class="btn-audio" id="audio-toggle" onclick="toggleAudio()"><i class="fa-solid fa-music"></i></button>
 
@@ -337,8 +359,8 @@
                 </div>
 
                 <div class="polaroid-container">
-                    <div class="polaroid pol-1"><img src="assets/foto1.jpg" alt="Chantal"></div>
-                    <div class="polaroid pol-2"><img src="assets/foto2.jpg" alt="Chantal"></div>
+                    <div class="polaroid pol-1"><img src="assets/foto2.jpg" alt="Chantal"></div>
+                    <div class="polaroid pol-2"><img src="assets/foto1.jpg" alt="Chantal"></div>
                 </div>
             </section>
 
@@ -414,10 +436,10 @@
             <section class="fluid-section scroll-anim anim-right" style="padding-left: 0; padding-right: 0;">
                 <h2 class="section-title shimmer-text">Galería</h2>
                 <div class="gallery-wrapper">
-                    <div class="gal-item"><img src="assets/foto3.jpg" alt="Foto"></div>
-                    <div class="gal-item"><img src="assets/foto4.jpg" alt="Foto"></div>
-                    <div class="gal-item"><img src="assets/foto5.jpg" alt="Foto"></div>
-                    <div class="gal-item"><img src="assets/foto6.jpg" alt="Foto"></div>
+                    <div class="gal-item"><img src="assets/foto3.jpg" alt="Foto" onclick="openLightbox(this.src)"></div>
+                    <div class="gal-item"><img src="assets/foto4.jpg" alt="Foto" onclick="openLightbox(this.src)"></div>
+                    <div class="gal-item"><img src="assets/foto5.jpg" alt="Foto" onclick="openLightbox(this.src)"></div>
+                    <div class="gal-item"><img src="assets/foto6.jpg" alt="Foto" onclick="openLightbox(this.src)"></div>
                 </div>
             </section>
 
@@ -528,6 +550,26 @@
             }
         }
         createSparkles();
+
+        // --- LÓGICA DE LIGHTBOX ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.style.display = 'flex';
+            setTimeout(() => lightbox.classList.add('show'), 10);
+            document.body.classList.add('no-scroll');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('show');
+            setTimeout(() => {
+                lightbox.style.display = 'none';
+                lightboxImg.src = '';
+                document.body.classList.remove('no-scroll');
+            }, 300);
+        }
 
         // --- LÓGICA DE PANTALLAS Y AUDIO ---
         const envScreen = document.getElementById('envelope-screen');
