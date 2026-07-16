@@ -109,9 +109,20 @@
             /* Agregamos un gradiente oscuro abajo para que el texto resalte */
             background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(110,44,62,0.6) 100%), url('assets/galeriaentrada.jpg') center/cover no-repeat;
             z-index: 9998; /* Justo detrás del sobre */
-            display: flex; align-items: flex-end; justify-content: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
             padding-bottom: 60px;
             transition: opacity 1.2s ease-out, visibility 1.2s ease-out;
+        }
+        .intro-title {
+            position: relative;
+            z-index: 10;
+            font-family: var(--font-cursive);
+            font-size: 4.5rem;
+            color: var(--white);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.4);
+            line-height: 1;
+            text-align: center;
         }
         .intro-hint {
             position: relative; /* Asegura que se posicione sobre el fondo */
@@ -320,6 +331,7 @@
 </head>
 <body class="no-scroll">
 
+    <!-- LIGHTBOX PARA FOTOS -->
     <div id="lightbox" onclick="closeLightbox()">
         <span class="lightbox-close">&times;</span>
         <img id="lightbox-img" src="" alt="Pantalla Completa" onclick="event.stopPropagation()">
@@ -339,6 +351,7 @@
     </div>
 
     <div id="intro-photo-screen" onclick="enterInvitation()">
+        <h1 class="intro-title">Mis XV Chantal</h1>
         <div class="intro-hint">Toca para entrar</div>
     </div>
 
