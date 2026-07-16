@@ -183,7 +183,8 @@
         }
 
         .btn-silver {
-            display: inline-block; padding: 15px 45px; background: var(--silver-gradient);
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 15px 45px; background: var(--silver-gradient);
             color: var(--wine-dark); font-family: var(--font-sans); font-size: 0.85rem; letter-spacing: 4px;
             text-transform: uppercase; text-decoration: none; border-radius: 40px; font-weight: 700;
             box-shadow: 0 10px 25px rgba(166, 166, 166, 0.4); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); margin-top: 35px;
@@ -336,8 +337,8 @@
                 </div>
 
                 <div class="polaroid-container">
-                    <div class="polaroid pol-1"><img src="assets/hero.jpg" alt="Chantal"></div>
-                    <div class="polaroid pol-2"><img src="assets/galeria1.jpg" alt="Chantal"></div>
+                    <div class="polaroid pol-1"><img src="assets/foto1.jpg" alt="Chantal"></div>
+                    <div class="polaroid pol-2"><img src="assets/foto2.jpg" alt="Chantal"></div>
                 </div>
             </section>
 
@@ -371,7 +372,9 @@
                     <div class="day">29</div><div class="day">30</div><div class="day">31</div>
                 </div>
 
-                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mis+XV+Chantal&dates=20260822T230000Z/20260823T080000Z" target="_blank" class="btn-silver">Agregar al Calendario</a>
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mis+XV+Chantal&dates=20260822T230000Z/20260823T080000Z" target="_blank" class="btn-silver">
+                    <i class="fa-regular fa-calendar-plus"></i> Agregar al Calendario
+                </a>
             </section>
 
             <div class="elegant-divider"><i class="fa-solid fa-diamond"></i></div>
@@ -381,14 +384,14 @@
                     <h2 class="section-title shimmer-text">Ceremonia</h2>
                     <img src="assets/ceremonia.jpg" class="loc-img" alt="Ceremonia">
                     <p class="loc-desc">Parroquia Sagrado Corazon de Jesus.<br>5ta avenida 321 Col. Satélite del Norte,<br>Salinas Victoria Nuevo León.<br><strong>6:00 p.m.</strong></p>
-                    <a href="https://maps.app.goo.gl/hDMHoEA1dyYNUyzs5?g_st=iw" target="_blank" class="btn-silver">Ver Ubicación</a>
+                    <a href="https://maps.app.goo.gl/hDMHoEA1dyYNUyzs5?g_st=iw" target="_blank" class="btn-silver"><i class="fa-solid fa-location-dot"></i> Ver Ubicación</a>
                 </div>
 
                 <div class="location-block scroll-anim anim-right" style="margin-bottom: 0;">
                     <h2 class="section-title shimmer-text">Recepción</h2>
                     <img src="assets/recepcion.jpg" class="loc-img" alt="Recepción">
                     <p class="loc-desc">Centro Social Salinas Victoria.<br>Calle Francisco I. Madero 220 Centro de Salinas Victoria<br><strong>7:30 p.m.</strong></p>
-                    <a href="https://maps.app.goo.gl/vp9gc3FrjbPDbGLF9?g_st=iw" target="_blank" class="btn-silver">Ver Ubicación</a>
+                    <a href="https://maps.app.goo.gl/vp9gc3FrjbPDbGLF9?g_st=iw" target="_blank" class="btn-silver"><i class="fa-solid fa-location-dot"></i> Ver Ubicación</a>
                 </div>
             </section>
 
@@ -411,11 +414,10 @@
             <section class="fluid-section scroll-anim anim-right" style="padding-left: 0; padding-right: 0;">
                 <h2 class="section-title shimmer-text">Galería</h2>
                 <div class="gallery-wrapper">
-                    <div class="gal-item"><img src="assets/galeria2.jpg" alt="Foto"></div>
-                    <div class="gal-item"><img src="assets/galeria3.jpg" alt="Foto"></div>
-                    <div class="gal-item"><img src="assets/galeria4.jpg" alt="Foto"></div>
-                    <div class="gal-item"><img src="assets/galeria5.jpg" alt="Foto"></div>
-                    <div class="gal-item"><img src="assets/galeria6.jpg" alt="Foto"></div>
+                    <div class="gal-item"><img src="assets/foto3.jpg" alt="Foto"></div>
+                    <div class="gal-item"><img src="assets/foto4.jpg" alt="Foto"></div>
+                    <div class="gal-item"><img src="assets/foto5.jpg" alt="Foto"></div>
+                    <div class="gal-item"><img src="assets/foto6.jpg" alt="Foto"></div>
                 </div>
             </section>
 
@@ -457,7 +459,11 @@
                     <i class="fa-solid fa-camera-retro" style="font-size: 3.5rem; color: var(--wine-dark);"></i>
                 </div>
                 <p class="info-text" style="margin-bottom: 30px;">Escanea el código QR para compartir tus fotos y videos del evento con nosotros.</p>
-                <img src="assets/qr.jpg" alt="Código QR Galería" style="width: 220px; height: 220px; border-radius: 15px; box-shadow: 0 10px 30px rgba(110, 44, 62, 0.2); border: 5px solid #fff;">
+                <img src="assets/qrfotos.png" alt="Código QR Galería" style="width: 220px; height: 220px; border-radius: 15px; box-shadow: 0 10px 30px rgba(110, 44, 62, 0.2); border: 5px solid #fff;">
+                <br>
+                <a href="https://drive.google.com/drive/folders/13vy-bR5Sr9mKIg2ldmDrs4t9HLxZ1ZQO?usp=drive_link" target="_blank" class="btn-silver">
+                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.2rem; margin-right: 5px;"></i> Subir Fotos
+                </a>
             </section>
 
             <div class="elegant-divider"><i class="fa-solid fa-diamond"></i></div>
